@@ -114,15 +114,16 @@ while True:
     print("---- BIENVENIDOS ----")
     print("Seleccione una opción: ")
     print("1. Ingresar nueva aeronave")
-    print("2. Agregar componentes a aeronave")
+    print("2. Agregar componentes a una aeronave")
     print("3. Registrar horas de vuelo")
     print("4. Revisar horas de vuelo y mantenimiento")
-    print("5. Mostrar información de aeronave")
+    print("5. Mostrar todas las aeronaves y sus componentes")
     print("6. Salir")
     opcion = input("Ingrese una opción (1-6): ")
 
     if opcion == "1":
-        matricula = input("Ingrese la matrícula de la aeronave: ")
+        print("---- Ingresar nueva aeronave ----")
+        matricula = input("Ingrese la matrícula de la aeronave: ").upper()
         if matricula in [avion[0]["Matrícula: "] for avion in Aeronaves]:
             print("La matrícula ya existe. No se puede ingresar la aeronave.")
         else:
@@ -151,7 +152,8 @@ while True:
             Aeronaves.append(Avion_nuevo)
             print("Aeronave ingresada exitosamente.")
     elif opcion == "2":
-        matricula = input("Ingrese la matrícula de la aeronave: ")
+        print("---- Agregar componentes a una aeronave ----")
+        matricula = input("Ingrese la matrícula de la aeronave: ").upper()
         if matricula in [avion[0]["Matrícula: "] for avion in Aeronaves]:
             for avion in Aeronaves:
                 if avion[0]["Matrícula: "] == matricula:
@@ -164,8 +166,9 @@ while True:
         else:
                 print("Aeronave no encontrada.")
     elif opcion == "3":
+        print("---- Registrar horas de vuelo ----")
         print(f"Aeronaves: {[avion[0]['Matrícula: '] for avion in Aeronaves]}")
-        matricula = input("Ingrese la matrícula de la aeronave: ")
+        matricula = input("Ingrese la matrícula de la aeronave: ").upper()
         if matricula in [avion[0]["Matrícula: "] for avion in Aeronaves]:
             horas_vuelo = int(input("Ingrese las horas de vuelo: "))
             for avion in Aeronaves:
@@ -180,7 +183,9 @@ while True:
         else:
             print("Aeronave no encontrada.")                
     elif opcion == "4":
-        matricula = input("Ingrese la matrícula de la aeronave: ")
+        print("---- Revisar horas de vuelo y mantenimiento ----")
+        print(f"Aeronaves: {[avion[0]['Matrícula: '] for avion in Aeronaves]}")
+        matricula = input("Ingrese la matrícula de la aeronave: ").upper()
         if matricula in [avion[0]["Matrícula: "] for avion in Aeronaves]:
             for avion in Aeronaves:
                 if avion[0]["Matrícula: "] == matricula:
@@ -192,27 +197,26 @@ while True:
                         print(f"{componente} {horas} / {avion[2][componente]} horas")
                         if horas >= avion[2][componente]:
                             print(f"El componente {componente} ha alcanzado su límite de horas. Se requiere mantenimiento.")
+                            realizar_mantenimiento = input(f"¿Desea realizar mantenimiento del componente {componente}? (si/no): ")
+                            if realizar_mantenimiento.lower() == "si":
+                                avion[1][componente] = 0
+                                print(f"Mantenimiento del componente {componente} realizado exitosamente.")
                     break
         else:
             print("Aeronave no encontrada.")
     elif opcion == "5":
-        matricula = input("Ingrese la matrícula de la aeronave: ")
-        if matricula in [avion[0]["Matrícula: "] for avion in Aeronaves]:
-            for avion in Aeronaves:
-                if avion[0]["Matrícula: "] == matricula:
-                    print(f"Matrícula: {avion[0]['Matrícula: ']}")
-                    print(f"Modelo: {avion[0]['Modelo: ']}")
-                    print(f"Horas de vuelo acumuladas: {avion[0]['Horas de vuelo acumuladas: ']}")
-                    print("Horas acumuladas de componentes:")
-                    for componente, horas in avion[1].items():
-                        print(f"{componente} {horas} / {avion[2][componente]} horas")
-                        if horas >= avion[2][componente]:
-                            print(f"El componente {componente} ha alcanzado su límite de horas. Se requiere mantenimiento.")
-                    break
-        else:
-            print("Aeronave no encontrada.")        
+        print("---- Ver todas las aeronaves y sus componentes ----")
+        for avion in Aeronaves:
+            print(f"Matrícula: {avion[0]['Matrícula: ']}")
+            print(f"Modelo: {avion[0]['Modelo: ']}")
+            print(f"Horas de vuelo acumuladas: {avion[0]['Horas de vuelo acumuladas: ']}")
+            print("Horas acumuladas de componentes:")
+            for componente, horas in avion[1].items():
+                print(f"{componente} {horas} / {avion[2][componente]} horas")
+                if horas >= avion[2][componente]:
+                    print(f"El componente {componente} ha alcanzado su límite de horas. Se requiere mantenimiento.")        
     elif opcion == "6":
         print("Saliendo del programa...")
         break
     else:
-        print("Opción inválida. Por favor, ingrese una opción válida (1-6).") 
+        print("Opción inválida. Por favor, seleccione una opción válida (1-6).")
